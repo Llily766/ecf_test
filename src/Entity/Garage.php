@@ -33,9 +33,13 @@ class Garage
     #[ORM\OneToMany(targetEntity: Vehicle::class, mappedBy: 'garage')]
     private Collection $vehicles;
 
+    #[ORM\ManyToMany(targetEntity: Service::class, mappedBy: 'garage')]
+    private Collection $services;
+
     public function __construct()
     {
         $this->vehicles = new ArrayCollection();
+        $this->services = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -128,6 +132,33 @@ class Garage
             if ($vehicle->getGarage() === $this) {
                 $vehicle->setGarage(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Service>
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Service $service): static
+    {
+        if (!$this->services->contains($service)) {
+            $this->services->add($service);
+            $service->addGarage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): static
+    {
+        if ($this->services->removeElement($service)) {
+            $service->removeGarage($this);
         }
 
         return $this;
