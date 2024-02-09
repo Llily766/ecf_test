@@ -39,6 +39,12 @@ class Garage
     #[ORM\OneToMany(targetEntity: Contact::class, mappedBy: 'garages')]
     private Collection $contacts;
 
+    #[ORM\ManyToOne(inversedBy: 'lastName')]
+    private ?Testimonial $testimonial = null;
+
+    #[ORM\ManyToOne(inversedBy: 'phoneNumber')]
+    private ?Employee $employee = null;
+
     public function __construct()
     {
         $this->vehicles = new ArrayCollection();
@@ -194,6 +200,30 @@ class Garage
                 $contact->setGarages(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTestimonial(): ?Testimonial
+    {
+        return $this->testimonial;
+    }
+
+    public function setTestimonial(?Testimonial $testimonial): static
+    {
+        $this->testimonial = $testimonial;
+
+        return $this;
+    }
+
+    public function getEmployee(): ?Employee
+    {
+        return $this->employee;
+    }
+
+    public function setEmployee(?Employee $employee): static
+    {
+        $this->employee = $employee;
 
         return $this;
     }
