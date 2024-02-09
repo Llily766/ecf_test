@@ -186,7 +186,7 @@ class Garage
     {
         if (!$this->contacts->contains($contact)) {
             $this->contacts->add($contact);
-            $contact->setGarages($this);
+            $contact->setGarage($this);
         }
 
         return $this;
@@ -196,8 +196,8 @@ class Garage
     {
         if ($this->contacts->removeElement($contact)) {
             // set the owning side to null (unless already changed)
-            if ($contact->getGarages() === $this) {
-                $contact->setGarages(null);
+            if ($contact->getGarage() === $this) {
+                $contact->setGarage(null);
             }
         }
 
