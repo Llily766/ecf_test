@@ -25,7 +25,7 @@ class Garage
     private ?string $mail = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $garageName = null;
 
     #[ORM\Column(length: 255)]
     private ?string $phoneNumber = null;
@@ -33,9 +33,23 @@ class Garage
     #[ORM\OneToMany(targetEntity: Vehicle::class, mappedBy: 'garage')]
     private Collection $vehicles;
 
+    #[ORM\ManyToMany(targetEntity: Service::class, mappedBy: 'garage')]
+    private Collection $services;
+
+    #[ORM\OneToMany(targetEntity: Contact::class, mappedBy: 'garages')]
+    private Collection $contacts;
+
+    #[ORM\ManyToOne(inversedBy: 'lastName')]
+    private ?Testimonial $testimonial = null;
+
+    #[ORM\ManyToOne(inversedBy: 'phoneNumber')]
+    private ?Employee $employee = null;
+
     public function __construct()
     {
         $this->vehicles = new ArrayCollection();
+        $this->services = new ArrayCollection();
+        $this->contacts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -79,14 +93,14 @@ class Garage
         return $this;
     }
 
-    public function getName(): ?string
+    public function getGarageName(): ?string
     {
-        return $this->name;
+        return $this->garageName;
     }
 
-    public function setName(string $name): static
+    public function setGarageName(string $garageName): static
     {
-        $this->name = $name;
+        $this->garageName = $garageName;
 
         return $this;
     }
@@ -129,6 +143,87 @@ class Garage
                 $vehicle->setGarage(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Service>
+     */
+    public function getServices(): Collection
+    {
+        return $this->services;
+    }
+
+    public function addService(Service $service): static
+    {
+        if (!$this->services->contains($service)) {
+            $this->services->add($service);
+            $service->addGarage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeService(Service $service): static
+    {
+        if ($this->services->removeElement($service)) {
+            $service->removeGarage($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Contact>
+     */
+    public function getContacts(): Collection
+    {
+        return $this->contacts;
+    }
+
+    public function addContact(Contact $contact): static
+    {
+        if (!$this->contacts->contains($contact)) {
+            $this->contacts->add($contact);
+            $contact->setGarage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContact(Contact $contact): static
+    {
+        if ($this->contacts->removeElement($contact)) {
+            // set the owning side to null (unless already changed)
+            if ($contact->getGarage() === $this) {
+                $contact->setGarage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getTestimonial(): ?Testimonial
+    {
+        return $this->testimonial;
+    }
+
+    public function setTestimonial(?Testimonial $testimonial): static
+    {
+        $this->testimonial = $testimonial;
+
+        return $this;
+    }
+
+    public function getEmployee(): ?Employee
+    {
+        return $this->employee;
+    }
+
+    public function setEmployee(?Employee $employee): static
+    {
+        $this->employee = $employee;
 
         return $this;
     }
