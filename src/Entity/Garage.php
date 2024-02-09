@@ -25,7 +25,7 @@ class Garage
     private ?string $mail = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $garageName = null;
 
     #[ORM\Column(length: 255)]
     private ?string $phoneNumber = null;
@@ -87,14 +87,14 @@ class Garage
         return $this;
     }
 
-    public function getName(): ?string
+    public function getGarageName(): ?string
     {
-        return $this->name;
+        return $this->garageName;
     }
 
-    public function setName(string $name): static
+    public function setGarageName(string $garageName): static
     {
-        $this->name = $name;
+        $this->garageName = $garageName;
 
         return $this;
     }
