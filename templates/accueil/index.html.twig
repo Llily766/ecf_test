@@ -4,49 +4,49 @@
 {% endblock %}
 
 {% block body %}
-	
+
 	<div class='container'>
 		<div class='row expTest'>
 			{% for service in services %}
-			<link rel="stylesheet" href="style.css">
+
 				<div class="col-6">
-				
-				<div class="test">
 
-					<img src="upload/services/{{ service.picture }}" alt="{{service.title }}" class="align-self-center" width="auto" height='auto'>
+					<div class="test">
 
-					<div class="card-body">
-						<p class="card-title">{{service.title }}</p>
+						<img src="upload/services/{{ service.picture }}" alt="{{service.title }}" class="align-self-center" width="150px" height='auto'>
 
-						<p class="card-text">{{service.description}}</p>
+						<div class="card-body">
+							<p class="card-title">{{service.title }}</p>
+
+							<p class="card-text">{{service.description}}</p>
 
 
+						</div>
 					</div>
+				{% endfor %}
+			</div>
+		</div>
+
+		<div id="carouselExample" class="carousel slide">
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<div>Rapide et efficace note 20/20 Esther</div>
 				</div>
-			{% endfor %}
+				<div class="carousel-item">
+					<div>la voiture était entre de bonnes mains note 20/20 Georges</div>
+				</div>
+				<div class="carousel-item">
+					<div>Vérifie les éléments de sécurité note 20/20 Martin</div>
+				</div>
+			</div>
+			<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Previous</span>
+			</button>
+			<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="visually-hidden">Next</span>
+			</button>
 		</div>
-	</div>
 
-	<div id="carouselExample" class="carousel slide">
-		<div class="carousel-inner">
-			<div class="carousel-item active">
-				<div>Rapide et efficace note 20/20 Esther</div>
-			</div>
-			<div class="carousel-item">
-				<div>la voiture était entre de bonnes mains note 20/20 Georges</div>
-			</div>
-			<div class="carousel-item">
-				<div>Vérifie les éléments de sécurité note 20/20 Martin</div>
-			</div>
-		</div>
-		<button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-			<span class="carousel-control-prev-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Previous</span>
-		</button>
-		<button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-			<span class="carousel-control-next-icon" aria-hidden="true"></span>
-			<span class="visually-hidden">Next</span>
-		</button>
-	</div>
-
-{% endblock %}
+	{% endblock %}
